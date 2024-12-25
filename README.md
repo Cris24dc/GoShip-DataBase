@@ -20,7 +20,7 @@ The database is implemented using **Oracle SQL** and **PL/SQL** and captures det
 
 ## Repository Structure
 
-<img src="./images/file_structure.png" width=15%>
+<img src="./images/file_structure.png" width=25%>
 
 ## Usage Instructions
 
