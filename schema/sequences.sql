@@ -1,3 +1,14 @@
+-- drop secvente:
+DROP SEQUENCE seq_angajat;
+DROP SEQUENCE seq_depozit;
+DROP SEQUENCE seq_producator;
+DROP SEQUENCE seq_categorie;
+DROP SEQUENCE seq_produs;
+DROP SEQUENCE seq_comanda;
+DROP SEQUENCE seq_ruta;
+DROP SEQUENCE seq_client;
+DROP SEQUENCE seq_factura;
+
 -- secvente:
 CREATE SEQUENCE seq_angajat
     START WITH 101 
