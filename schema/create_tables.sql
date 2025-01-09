@@ -119,12 +119,10 @@ CREATE TABLE PRODUS_COMANDA (
 );
 
 CREATE TABLE RUTE (
-    id_ruta         NUMBER NOT NULL,
     id_depozit      NUMBER NOT NULL,
     id_comanda      NUMBER NOT NULL,
     id_sofer        NUMBER NOT NULL,
-    durata_estimata NUMBER NOT NULL,
-    CONSTRAINT ruta_pk PRIMARY KEY (id_ruta),
+    data_plecare DATE,
     CONSTRAINT ruta_depozit_fk FOREIGN KEY (id_depozit) REFERENCES DEPOZITE(id_depozit),
     CONSTRAINT ruta_comanda_fk FOREIGN KEY (id_comanda) REFERENCES COMENZI(id_comanda),
     CONSTRAINT ruta_sofer_fk FOREIGN KEY (id_sofer) REFERENCES SOFERI(id_angajat)
