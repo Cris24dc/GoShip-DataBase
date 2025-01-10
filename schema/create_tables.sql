@@ -48,16 +48,6 @@ CREATE TABLE CLIENTI (
     CONSTRAINT client_pk PRIMARY KEY (id_client)
 );
 
-CREATE TABLE FACTURI (
-    id_factura        NUMBER NOT NULL,
-    id_comanda        NUMBER NOT NULL,
-    data_facturare    DATE NOT NULL,
-    suma_factura      NUMBER NOT NULL,
-    tva_factura       NUMBER NOT NULL,
-    CONSTRAINT factura_pk PRIMARY KEY (id_factura),
-    CONSTRAINT factura_comanda_fk FOREIGN KEY (id_comanda) REFERENCES COMENZI(id_comanda)
-);
-
 CREATE TABLE ANGAJATI (
     id_angajat        NUMBER NOT NULL,
     id_depozit        NUMBER NOT NULL,
@@ -109,6 +99,16 @@ CREATE TABLE COMENZI (
     pret_comanda      NUMBER NOT NULL,
     CONSTRAINT comanda_pk PRIMARY KEY (id_comanda),
     CONSTRAINT comanda_client_fk FOREIGN KEY (id_client) REFERENCES CLIENTI(id_client)
+);
+
+CREATE TABLE FACTURI (
+    id_factura        NUMBER NOT NULL,
+    id_comanda        NUMBER NOT NULL,
+    data_facturare    DATE NOT NULL,
+    suma_factura      NUMBER NOT NULL,
+    tva_factura       NUMBER NOT NULL,
+    CONSTRAINT factura_pk PRIMARY KEY (id_factura),
+    CONSTRAINT factura_comanda_fk FOREIGN KEY (id_comanda) REFERENCES COMENZI(id_comanda)
 );
 
 CREATE TABLE PRODUS_COMANDA (

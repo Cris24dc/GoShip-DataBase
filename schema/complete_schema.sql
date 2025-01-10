@@ -117,16 +117,6 @@ CREATE TABLE CLIENTI (
     CONSTRAINT client_pk PRIMARY KEY (id_client)
 );
 
-CREATE TABLE FACTURI (
-    id_factura        NUMBER NOT NULL,
-    id_comanda        NUMBER NOT NULL,
-    data_facturare    DATE NOT NULL,
-    suma_factura      NUMBER NOT NULL,
-    tva_factura       NUMBER NOT NULL,
-    CONSTRAINT factura_pk PRIMARY KEY (id_factura),
-    CONSTRAINT factura_comanda_fk FOREIGN KEY (id_comanda) REFERENCES COMENZI(id_comanda)
-);
-
 CREATE TABLE ANGAJATI (
     id_angajat        NUMBER NOT NULL,
     id_depozit        NUMBER NOT NULL,
@@ -178,6 +168,16 @@ CREATE TABLE COMENZI (
     pret_comanda      NUMBER NOT NULL,
     CONSTRAINT comanda_pk PRIMARY KEY (id_comanda),
     CONSTRAINT comanda_client_fk FOREIGN KEY (id_client) REFERENCES CLIENTI(id_client)
+);
+
+CREATE TABLE FACTURI (
+    id_factura        NUMBER NOT NULL,
+    id_comanda        NUMBER NOT NULL,
+    data_facturare    DATE NOT NULL,
+    suma_factura      NUMBER NOT NULL,
+    tva_factura       NUMBER NOT NULL,
+    CONSTRAINT factura_pk PRIMARY KEY (id_factura),
+    CONSTRAINT factura_comanda_fk FOREIGN KEY (id_comanda) REFERENCES COMENZI(id_comanda)
 );
 
 CREATE TABLE PRODUS_COMANDA (
@@ -256,18 +256,6 @@ INSERT INTO CLIENTI VALUES (seq_client.nextval, 'Elena', 'Dumitrescu', 'elena.du
 INSERT INTO CLIENTI VALUES (seq_client.nextval, 'Florin', 'Mihailescu', 'florin.mihailescu@email.com', '0767890123', 'Constanta, Strada Unirii, Nr. 56');
 INSERT INTO CLIENTI VALUES (seq_client.nextval, 'Ana', 'Georgescu', 'ana.georgescu@email.com', '0778901234', 'Brasov, Strada Lunga, Nr. 34');
 
--- Facturi:
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 101, TO_DATE('19-01-2024', 'DD-MM-YYYY'), 120, 5);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 102, TO_DATE('15-01-2024', 'DD-MM-YYYY'), 250, 12);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 103, TO_DATE('07-01-2024', 'DD-MM-YYYY'), 300, 14);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 104, TO_DATE('12-05-2024', 'DD-MM-YYYY'), 150, 7);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 105, TO_DATE('13-05-2024', 'DD-MM-YYYY'), 500, 24);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 106, TO_DATE('15-05-2024', 'DD-MM-YYYY'), 400, 19);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 107, TO_DATE('18-05-2024', 'DD-MM-YYYY'), 750, 36);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 108, TO_DATE('04-08-2024', 'DD-MM-YYYY'), 600, 24);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 109, TO_DATE('08-08-2024', 'DD-MM-YYYY'), 450, 22);
-INSERT INTO FACTURI VALUES (seq_factura.nextval, 110, TO_DATE('17-09-2024', 'DD-MM-YYYY'), 200, 19);
-
 -- Comenzi:
 INSERT INTO COMENZI VALUES (seq_comanda.nextval, 105, TO_DATE('19-01-2024', 'DD-MM-YYYY'), 'Anulata', 120);
 INSERT INTO COMENZI VALUES (seq_comanda.nextval, 101, TO_DATE('15-01-2024', 'DD-MM-YYYY'), 'Procesata', 250);
@@ -279,6 +267,18 @@ INSERT INTO COMENZI VALUES (seq_comanda.nextval, 104, TO_DATE('18-05-2024', 'DD-
 INSERT INTO COMENZI VALUES (seq_comanda.nextval, 104, TO_DATE('04-08-2024', 'DD-MM-YYYY'), 'Procesata', 600);
 INSERT INTO COMENZI VALUES (seq_comanda.nextval, 106, TO_DATE('08-08-2024', 'DD-MM-YYYY'), 'Procesata', 450);
 INSERT INTO COMENZI VALUES (seq_comanda.nextval, 104, TO_DATE('17-09-2024', 'DD-MM-YYYY'), 'In asteptare', 200);
+
+-- Facturi:
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 101, TO_DATE('19-01-2024', 'DD-MM-YYYY'), 120, 5);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 102, TO_DATE('15-01-2024', 'DD-MM-YYYY'), 250, 12);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 103, TO_DATE('07-01-2024', 'DD-MM-YYYY'), 300, 14);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 104, TO_DATE('12-05-2024', 'DD-MM-YYYY'), 150, 7);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 105, TO_DATE('13-05-2024', 'DD-MM-YYYY'), 500, 24);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 106, TO_DATE('15-05-2024', 'DD-MM-YYYY'), 400, 19);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 107, TO_DATE('18-05-2024', 'DD-MM-YYYY'), 750, 36);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 108, TO_DATE('04-08-2024', 'DD-MM-YYYY'), 600, 24);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 109, TO_DATE('08-08-2024', 'DD-MM-YYYY'), 450, 22);
+INSERT INTO FACTURI VALUES (seq_factura.nextval, 110, TO_DATE('17-09-2024', 'DD-MM-YYYY'), 200, 19);
 
 INSERT INTO PRODUS_COMANDA VALUES (101, 101);
 INSERT INTO PRODUS_COMANDA VALUES (102, 101);
