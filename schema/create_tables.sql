@@ -50,10 +50,12 @@ CREATE TABLE CLIENTI (
 
 CREATE TABLE FACTURI (
     id_factura        NUMBER NOT NULL,
+    id_comanda        NUMBER NOT NULL,
     data_facturare    DATE NOT NULL,
     suma_factura      NUMBER NOT NULL,
     tva_factura       NUMBER NOT NULL,
-    CONSTRAINT factura_pk PRIMARY KEY (id_factura)
+    CONSTRAINT factura_pk PRIMARY KEY (id_factura),
+    CONSTRAINT factura_comanda_fk FOREIGN KEY (id_comanda) REFERENCES COMENZI(id_comanda)
 );
 
 CREATE TABLE ANGAJATI (
@@ -102,13 +104,11 @@ CREATE TABLE PRODUSE (
 CREATE TABLE COMENZI (
     id_comanda        NUMBER NOT NULL,
     id_client         NUMBER NOT NULL,
-    id_factura        NUMBER NOT NULL,
     data_plasare_comanda DATE NOT NULL,
     status_comanda    VARCHAR2(50) NOT NULL,
     pret_comanda      NUMBER NOT NULL,
     CONSTRAINT comanda_pk PRIMARY KEY (id_comanda),
-    CONSTRAINT comanda_client_fk FOREIGN KEY (id_client) REFERENCES CLIENTI(id_client),
-    CONSTRAINT comanda_factura_fk FOREIGN KEY (id_factura) REFERENCES FACTURI(id_factura)
+    CONSTRAINT comanda_client_fk FOREIGN KEY (id_client) REFERENCES CLIENTI(id_client)
 );
 
 CREATE TABLE PRODUS_COMANDA (
