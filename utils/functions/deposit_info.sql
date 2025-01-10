@@ -1,4 +1,7 @@
-CREATE OR REPLACE PROCEDURE DATE_DEPOZIT IS
+-- Creati un subprogram stocat independent care sa afiseze toate depozitele alaturi de urmatoarele detalii despre fiecare:
+-- suma totala platita lunar pe salarii, salariul mediu si o lista cu toti angajatii. 
+
+CREATE OR REPLACE PROCEDURE date_depozit IS
    TYPE salarii_depozit IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
    l_salarii_totale salarii_depozit;
 

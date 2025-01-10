@@ -1,3 +1,5 @@
+-- Creaza un subprogram stocat independent de tip functie care sa returneze cea mai vanduta categorie
+
 CREATE OR REPLACE FUNCTION cea_mai_vanduta_categorie RETURN VARCHAR2 IS
     nume_categorie VARCHAR2(50);
 
