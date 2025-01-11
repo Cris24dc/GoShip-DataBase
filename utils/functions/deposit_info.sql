@@ -1,62 +1,59 @@
--- Creati un subprogram stocat independent care sa afiseze toate depozitele alaturi de urmatoarele detalii despre fiecare:
--- suma totala platita lunar pe salarii, salariul mediu si o lista cu toti angajatii. 
+CREATE OR REPLACE PROCEDURE warehouse_data IS
+   TYPE salaries_warehouse IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+   l_total_salaries salaries_warehouse;
 
-CREATE OR REPLACE PROCEDURE date_depozit IS
-   TYPE salarii_depozit IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
-   l_salarii_totale salarii_depozit;
+   TYPE employees IS TABLE OF VARCHAR2(255);
+   l_warehouse_employees employees := employees();
 
-   TYPE angajati IS TABLE OF VARCHAR2(255);
-   l_angajati_depozit angajati := angajati();
-
-   TYPE salarii IS VARRAY(100) OF NUMBER;
-   l_salarii_angajati salarii;
+   TYPE salaries IS VARRAY(100) OF NUMBER;
+   l_employee_salaries salaries;
 
 BEGIN
-   FOR depozit IN (
-      SELECT D.ID_DEPOZIT, D.NUME_DEPOZIT, NVL(SUM(A.SALARIU_ANGAJAT), 0) AS SALARIU_TOTAL
-      FROM DEPOZITE D
-      LEFT JOIN ANGAJATI A ON D.ID_DEPOZIT = A.ID_DEPOZIT
-      GROUP BY D.ID_DEPOZIT, D.NUME_DEPOZIT
+   FOR warehouse IN (
+      SELECT W.warehouse_id, W.warehouse_name, NVL(SUM(E.employee_salary), 0) AS total_salary
+      FROM warehouses W
+      LEFT JOIN employees E ON W.warehouse_id = E.warehouse_id
+      GROUP BY W.warehouse_id, W.warehouse_name
    ) LOOP
-      l_salarii_totale(depozit.ID_DEPOZIT) := depozit.SALARIU_TOTAL;
+      l_total_salaries(warehouse.warehouse_id) := warehouse.total_salary;
 
-      l_angajati_depozit.DELETE;
-      l_salarii_angajati := salarii();
+      l_warehouse_employees.DELETE;
+      l_employee_salaries := salaries();
 
-      FOR angajat IN (
-         SELECT NUME_ANGAJAT, PRENUME_ANGAJAT, SALARIU_ANGAJAT
-         FROM ANGAJATI
-         WHERE ID_DEPOZIT = depozit.ID_DEPOZIT
+      FOR employee IN (
+         SELECT employee_first_name, employee_last_name, employee_salary
+         FROM employees
+         WHERE warehouse_id = warehouse.warehouse_id
       ) LOOP
-         l_angajati_depozit.EXTEND;
-         l_angajati_depozit(l_angajati_depozit.COUNT) := angajat.NUME_ANGAJAT || ' ' || angajat.PRENUME_ANGAJAT;
+         l_warehouse_employees.EXTEND;
+         l_warehouse_employees(l_warehouse_employees.COUNT) := employee.employee_first_name || ' ' || employee.employee_last_name;
 
-         IF l_salarii_angajati.COUNT < l_salarii_angajati.LIMIT THEN
-            l_salarii_angajati.EXTEND;
-            l_salarii_angajati(l_salarii_angajati.COUNT) := angajat.SALARIU_ANGAJAT;
+         IF l_employee_salaries.COUNT < l_employee_salaries.LIMIT THEN
+            l_employee_salaries.EXTEND;
+            l_employee_salaries(l_employee_salaries.COUNT) := employee.employee_salary;
          ELSE
-            DBMS_OUTPUT.PUT_LINE('Depozitul ' || depozit.NUME_DEPOZIT || ' are prea multi angajati.');
+            DBMS_OUTPUT.PUT_LINE('The warehouse ' || warehouse.warehouse_name || ' has too many employees.');
          END IF;
       END LOOP;
 
       DECLARE
-         suma_salarii NUMBER := 0;
-         salariu_mediu NUMBER := 0;
+         total_salary_sum NUMBER := 0;
+         average_salary NUMBER := 0;
       BEGIN
-         FOR i IN 1 .. l_salarii_angajati.COUNT LOOP
-            suma_salarii := suma_salarii + l_salarii_angajati(i);
+         FOR i IN 1 .. l_employee_salaries.COUNT LOOP
+            total_salary_sum := total_salary_sum + l_employee_salaries(i);
          END LOOP;
-         IF l_salarii_angajati.COUNT > 0 THEN
-            salariu_mediu := suma_salarii / l_salarii_angajati.COUNT;
+         IF l_employee_salaries.COUNT > 0 THEN
+            average_salary := total_salary_sum / l_employee_salaries.COUNT;
          END IF;
 
          DBMS_OUTPUT.PUT_LINE('----------------------');
-         DBMS_OUTPUT.PUT_LINE(depozit.NUME_DEPOZIT);
-         DBMS_OUTPUT.PUT_LINE('  Salariul total: ' || l_salarii_totale(depozit.ID_DEPOZIT));
-         DBMS_OUTPUT.PUT_LINE('  Salariul mediu: ' || salariu_mediu);
-         DBMS_OUTPUT.PUT_LINE('  Angajati:');
-         FOR i IN 1 .. l_angajati_depozit.COUNT LOOP
-            DBMS_OUTPUT.PUT_LINE('   - ' || l_angajati_depozit(i));
+         DBMS_OUTPUT.PUT_LINE(warehouse.warehouse_name);
+         DBMS_OUTPUT.PUT_LINE('  Total Salary: ' || l_total_salaries(warehouse.warehouse_id));
+         DBMS_OUTPUT.PUT_LINE('  Average Salary: ' || average_salary);
+         DBMS_OUTPUT.PUT_LINE('  Employees:');
+         FOR i IN 1 .. l_warehouse_employees.COUNT LOOP
+            DBMS_OUTPUT.PUT_LINE('   - ' || l_warehouse_employees(i));
          END LOOP;
       END;
    END LOOP;
@@ -65,6 +62,6 @@ END;
 /
 
 BEGIN
-   date_depozit;
+   warehouse_data;
 END;
 /

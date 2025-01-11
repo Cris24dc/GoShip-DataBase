@@ -1,38 +1,36 @@
--- Creaza un subprogram stocat independent de tip functie care sa returneze cea mai vanduta categorie
-
-CREATE OR REPLACE FUNCTION cea_mai_vanduta_categorie RETURN VARCHAR2 IS
-    nume_categorie VARCHAR2(50);
+CREATE OR REPLACE FUNCTION best_selling_category RETURN VARCHAR2 IS
+    category_name VARCHAR2(50);
 
 BEGIN
-    SELECT c.nume_categorie
-    INTO nume_categorie
-    FROM CATEGORII c
+    SELECT c.category_name
+    INTO category_name
+    FROM CATEGORIES c
     JOIN (
-        SELECT p.id_categorie, COUNT(*) AS vanzari_totale
-        FROM PRODUSE p
-        JOIN PRODUS_COMANDA pc ON p.id_produs = pc.id_produs
-        GROUP BY p.id_categorie
+        SELECT p.category_id, COUNT(*) AS total_sales
+        FROM PRODUCTS p
+        JOIN ORDER_PRODUCT po ON p.product_id = po.product_id
+        GROUP BY p.category_id
         HAVING COUNT(*) = (
-            SELECT MAX(vanzari_totale) FROM (
-                SELECT p.id_categorie, COUNT(*) AS vanzari_totale
-                FROM PRODUSE p
-                JOIN PRODUS_COMANDA pc ON p.id_produs = pc.id_produs
-                GROUP BY p.id_categorie
+            SELECT MAX(total_sales) FROM (
+                SELECT p.category_id, COUNT(*) AS total_sales
+                FROM PRODUCTS p
+                JOIN ORDER_PRODUCT po ON p.product_id = po.product_id
+                GROUP BY p.category_id
             )
         )
-    ) vanzari_categorie ON c.id_categorie = vanzari_categorie.id_categorie;
+    ) sales_category ON c.category_id = sales_category.category_id;
 
-    RETURN nume_categorie;
+    RETURN category_name;
 
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
-        RETURN 'Nicio categorie nu a fost vândută';
+        RETURN 'No category was sold';
     WHEN TOO_MANY_ROWS THEN
-        RETURN 'Mai multe categorii sunt vândute la fel de bine';
+        RETURN 'Multiple categories are sold equally well';
 END;
 /
 
 BEGIN
-    DBMS_OUTPUT.PUT_LINE(cea_mai_vanduta_categorie());
+    DBMS_OUTPUT.PUT_LINE(best_selling_category());
 END;
 /

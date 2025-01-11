@@ -1,15 +1,4 @@
--- drop secvente:
-DROP SEQUENCE seq_angajat;
-DROP SEQUENCE seq_depozit;
-DROP SEQUENCE seq_producator;
-DROP SEQUENCE seq_categorie;
-DROP SEQUENCE seq_produs;
-DROP SEQUENCE seq_comanda;
-DROP SEQUENCE seq_client;
-DROP SEQUENCE seq_factura;
-
--- secvente:
-CREATE SEQUENCE seq_angajat
+CREATE SEQUENCE seq_employee
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 
@@ -17,7 +6,7 @@ CREATE SEQUENCE seq_angajat
     NOCACHE 
     NOCYCLE;
 
-CREATE SEQUENCE seq_depozit
+CREATE SEQUENCE seq_warehouse
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 
@@ -25,7 +14,7 @@ CREATE SEQUENCE seq_depozit
     NOCACHE 
     NOCYCLE;
 
-CREATE SEQUENCE seq_producator
+CREATE SEQUENCE seq_producer
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 
@@ -33,7 +22,7 @@ CREATE SEQUENCE seq_producator
     NOCACHE 
     NOCYCLE;
 
-CREATE SEQUENCE seq_categorie
+CREATE SEQUENCE seq_category
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 
@@ -41,7 +30,7 @@ CREATE SEQUENCE seq_categorie
     NOCACHE 
     NOCYCLE;
 
-CREATE SEQUENCE seq_produs
+CREATE SEQUENCE seq_product
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 
@@ -49,7 +38,7 @@ CREATE SEQUENCE seq_produs
     NOCACHE 
     NOCYCLE;
 
-CREATE SEQUENCE seq_comanda
+CREATE SEQUENCE seq_order
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 
@@ -65,11 +54,10 @@ CREATE SEQUENCE seq_client
     NOCACHE 
     NOCYCLE;
 
-CREATE SEQUENCE seq_factura
+CREATE SEQUENCE seq_invoice
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 
     MAXVALUE 999 
     NOCACHE 
     NOCYCLE;
-

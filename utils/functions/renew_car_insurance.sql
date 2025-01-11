@@ -1,42 +1,38 @@
--- Creaza un subprogram stocat independent care sa identifice soferii cu asigurarile care depasesc termenul dat ca parametru. 
--- Acesta sa afiseze numarul de soferi cu asigurari expirate si numele acestora. Daca nu exista soferi cu asigurari expirate,
--- sa afiseze un mesaj corespunzator.
-
-CREATE OR REPLACE PROCEDURE reinnoire_asigurari (p_perioada_luni IN NUMBER) IS
-  CURSOR cursor_soferi_expirati IS
-    SELECT id_angajat, numar_masina_sofer, data_asigurare_sofer
-    FROM SOFERI
-    WHERE data_asigurare_sofer < ADD_MONTHS(SYSDATE, -p_perioada_luni)
+CREATE OR REPLACE PROCEDURE renew_insurances (p_months_period IN NUMBER) IS
+  CURSOR expired_drivers_cursor IS
+    SELECT employee_id, driver_vehicle_number, driver_insurance_date
+    FROM DRIVERS
+    WHERE driver_insurance_date < ADD_MONTHS(SYSDATE, -p_months_period)
     FOR UPDATE;
 
-  CURSOR cursor_nume_angajat(p_id_angajat IN NUMBER) IS
-    SELECT nume_angajat, prenume_angajat
-    FROM ANGAJATI
-    WHERE id_angajat = p_id_angajat;
+  CURSOR employee_name_cursor(p_employee_id IN NUMBER) IS
+    SELECT employee_first_name, employee_last_name
+    FROM EMPLOYEES
+    WHERE employee_id = p_employee_id;
 
-  v_numar_masina_sofer SOFERI.numar_masina_sofer%TYPE;
-  v_nr_expirati NUMBER := 0;
-  v_nume_angajati_reinnoiti VARCHAR2(100);
-  v_nume_angajati_collection VARCHAR2(100) := '';
+  v_driver_vehicle_number DRIVERS.driver_vehicle_number%TYPE;
+  v_expired_count NUMBER := 0;
+  v_renewed_employee_names VARCHAR2(100);
+  v_employee_names_collection VARCHAR2(100) := '';
   
 BEGIN
-  FOR sofer IN cursor_soferi_expirati LOOP
-    UPDATE SOFERI
-    SET data_asigurare_sofer = SYSDATE
-    WHERE CURRENT OF cursor_soferi_expirati;
+  FOR driver IN expired_drivers_cursor LOOP
+    UPDATE DRIVERS
+    SET driver_insurance_date = SYSDATE
+    WHERE CURRENT OF expired_drivers_cursor;
 
-    v_nr_expirati := v_nr_expirati + 1;
+    v_expired_count := v_expired_count + 1;
 
-    FOR angajat IN cursor_nume_angajat(sofer.id_angajat) LOOP
-      v_nume_angajati_collection := v_nume_angajati_collection || ' - ' || angajat.nume_angajat || ' ' || angajat.prenume_angajat || CHR(10);
+    FOR employee IN employee_name_cursor(driver.employee_id) LOOP
+      v_employee_names_collection := v_employee_names_collection || ' - ' || employee.employee_first_name || ' ' || employee.employee_last_name || CHR(10);
     END LOOP;
   END LOOP;
 
-  IF v_nr_expirati = 0 THEN
-    DBMS_OUTPUT.PUT_LINE('Nu exista soferi cu asigurari expirate.');
+  IF v_expired_count = 0 THEN
+    DBMS_OUTPUT.PUT_LINE('There are no drivers with expired insurances.');
   ELSE
-    DBMS_OUTPUT.PUT_LINE(v_nr_expirati || ' soferi au avut asigurarile reinnoite.');
-    DBMS_OUTPUT.PUT_LINE(v_nume_angajati_collection);
+    DBMS_OUTPUT.PUT_LINE(v_expired_count || ' drivers had their insurances renewed.');
+    DBMS_OUTPUT.PUT_LINE(v_employee_names_collection);
   END IF;
 
   COMMIT;
@@ -44,6 +40,6 @@ END;
 /
 
 BEGIN
-  reinnoire_asigurari(12);
+  renew_insurances(12);
 END;
 /
