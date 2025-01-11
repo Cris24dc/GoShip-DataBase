@@ -18,13 +18,13 @@ INSERT INTO EMPLOYEES VALUES (seq_employee.nextval, 104, 'Ioana', 'Stanciu', 'io
 INSERT INTO EMPLOYEES VALUES (seq_employee.nextval, 105, 'Vasile', 'Radulescu', 'vasile.radulescu@hotmail.com', '0755332211', 2900, TO_DATE('21-10-2017', 'DD-MM-YYYY'));
 INSERT INTO EMPLOYEES VALUES (seq_employee.nextval, 106, 'Raluca', 'Neagu', 'raluca.neagu@live.com', '0739888777', 3400, TO_DATE('30-09-2021', 'DD-MM-YYYY'));
 
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Danone Romania', 'Bucharest, Fabrica de Glucoza Street, No. 4');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Altex Romania', 'Bucharest, Calea Vitan Street, No. 27');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'HnM Romania', 'Bucharest, Dorobanti Street, No. 230');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'IKEA Romania', 'Bucharest, Bulevardul Timisoara Street, No. 26');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Noriel', 'Bucharest, Lizeanu Street, No. 10');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Sephora', 'Bucharest, Sos. Nicolae Titulescu Street, No. 6');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Decathlon', 'Bucharest, Barbu Vacarescu Street, No. 120');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Danone Romania', 'Bucharest, Fabrica de Glucoza Street, No. 4');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Altex Romania', 'Bucharest, Calea Vitan Street, No. 27');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'HnM Romania', 'Bucharest, Dorobanti Street, No. 230');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'IKEA Romania', 'Bucharest, Bulevardul Timisoara Street, No. 26');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Noriel', 'Bucharest, Lizeanu Street, No. 10');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Sephora', 'Bucharest, Sos. Nicolae Titulescu Street, No. 6');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Decathlon', 'Bucharest, Barbu Vacarescu Street, No. 120');
 
 INSERT INTO CATEGORIES VALUES (seq_category.nextval, 'Food', 'Food products for daily consumption');
 INSERT INTO CATEGORIES VALUES (seq_category.nextval, 'Electronics', 'Electronic products perfect for any home');

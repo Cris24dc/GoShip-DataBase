@@ -14,7 +14,7 @@ CREATE SEQUENCE seq_warehouse
     NOCACHE 
     NOCYCLE;
 
-CREATE SEQUENCE seq_producer
+CREATE SEQUENCE seq_manufacturer
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 

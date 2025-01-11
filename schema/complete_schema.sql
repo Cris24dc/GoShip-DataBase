@@ -1,6 +1,6 @@
 DROP SEQUENCE seq_employee;
 DROP SEQUENCE seq_warehouse;
-DROP SEQUENCE seq_producer;
+DROP SEQUENCE seq_manufacturer;
 DROP SEQUENCE seq_category;
 DROP SEQUENCE seq_product;
 DROP SEQUENCE seq_order;
@@ -14,7 +14,7 @@ DROP TABLE HANDLERS CASCADE CONSTRAINTS;
 DROP TABLE DRIVERS CASCADE CONSTRAINTS;
 
 DROP TABLE PRODUCTS CASCADE CONSTRAINTS;
-DROP TABLE PRODUCERS CASCADE CONSTRAINTS;
+DROP TABLE MANUFACTURERS CASCADE CONSTRAINTS;
 DROP TABLE CATEGORIES CASCADE CONSTRAINTS;
 DROP TABLE INVOICES CASCADE CONSTRAINTS;
 DROP TABLE CLIENTS CASCADE CONSTRAINTS;
@@ -38,7 +38,7 @@ CREATE SEQUENCE seq_warehouse
     NOCACHE 
     NOCYCLE;
 
-CREATE SEQUENCE seq_producer
+CREATE SEQUENCE seq_manufacturer
     START WITH 101 
     INCREMENT BY 1 
     MINVALUE 101 
@@ -93,11 +93,11 @@ CREATE TABLE WAREHOUSES (
     CONSTRAINT warehouse_pk PRIMARY KEY (warehouse_id)
 );
 
-CREATE TABLE PRODUCERS (
-    producer_id       NUMBER NOT NULL,
-    producer_name     VARCHAR2(50) NOT NULL,
-    producer_address  VARCHAR2(255) NOT NULL,
-    CONSTRAINT producer_pk PRIMARY KEY (producer_id)
+CREATE TABLE MANUFACTURERS (
+    manufacturer_id       NUMBER NOT NULL,
+    manufacturer_name     VARCHAR2(50) NOT NULL,
+    manufacturer_address  VARCHAR2(255) NOT NULL,
+    CONSTRAINT manufacturer_pk PRIMARY KEY (manufacturer_id)
 );
 
 CREATE TABLE CATEGORIES (
@@ -149,14 +149,14 @@ CREATE TABLE DRIVERS (
 
 CREATE TABLE PRODUCTS (
     product_id        NUMBER NOT NULL,
-    producer_id       NUMBER NOT NULL,
+    manufacturer_id       NUMBER NOT NULL,
     category_id       NUMBER NOT NULL,
     product_name      VARCHAR2(50) NOT NULL,
     product_price     NUMBER NOT NULL,
     product_stock     NUMBER NOT NULL,
     product_description VARCHAR2(255),
     CONSTRAINT product_pk PRIMARY KEY (product_id),
-    CONSTRAINT product_producer_fk FOREIGN KEY (producer_id) REFERENCES PRODUCERS(producer_id),
+    CONSTRAINT product_manufacturer_fk FOREIGN KEY (manufacturer_id) REFERENCES manufacturerS(manufacturer_id),
     CONSTRAINT product_category_fk FOREIGN KEY (category_id) REFERENCES CATEGORIES(category_id)
 );
 
@@ -217,13 +217,13 @@ INSERT INTO EMPLOYEES VALUES (seq_employee.nextval, 104, 'Ioana', 'Stanciu', 'io
 INSERT INTO EMPLOYEES VALUES (seq_employee.nextval, 105, 'Vasile', 'Radulescu', 'vasile.radulescu@hotmail.com', '0755332211', 2900, TO_DATE('21-10-2017', 'DD-MM-YYYY'));
 INSERT INTO EMPLOYEES VALUES (seq_employee.nextval, 106, 'Raluca', 'Neagu', 'raluca.neagu@live.com', '0739888777', 3400, TO_DATE('30-09-2021', 'DD-MM-YYYY'));
 
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Danone Romania', 'Bucharest, Fabrica de Glucoza Street, No. 4');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Altex Romania', 'Bucharest, Calea Vitan Street, No. 27');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'HnM Romania', 'Bucharest, Dorobanti Street, No. 230');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'IKEA Romania', 'Bucharest, Bulevardul Timisoara Street, No. 26');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Noriel', 'Bucharest, Lizeanu Street, No. 10');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Sephora', 'Bucharest, Sos. Nicolae Titulescu Street, No. 6');
-INSERT INTO PRODUCERS VALUES (seq_producer.nextval, 'Decathlon', 'Bucharest, Barbu Vacarescu Street, No. 120');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Danone Romania', 'Bucharest, Fabrica de Glucoza Street, No. 4');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Altex Romania', 'Bucharest, Calea Vitan Street, No. 27');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'HnM Romania', 'Bucharest, Dorobanti Street, No. 230');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'IKEA Romania', 'Bucharest, Bulevardul Timisoara Street, No. 26');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Noriel', 'Bucharest, Lizeanu Street, No. 10');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Sephora', 'Bucharest, Sos. Nicolae Titulescu Street, No. 6');
+INSERT INTO MANUFACTURERS VALUES (seq_manufacturer.nextval, 'Decathlon', 'Bucharest, Barbu Vacarescu Street, No. 120');
 
 INSERT INTO CATEGORIES VALUES (seq_category.nextval, 'Food', 'Food products for daily consumption');
 INSERT INTO CATEGORIES VALUES (seq_category.nextval, 'Electronics', 'Electronic products perfect for any home');

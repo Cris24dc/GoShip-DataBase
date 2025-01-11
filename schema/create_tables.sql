@@ -5,11 +5,11 @@ CREATE TABLE WAREHOUSES (
     CONSTRAINT warehouse_pk PRIMARY KEY (warehouse_id)
 );
 
-CREATE TABLE PRODUCERS (
-    producer_id       NUMBER NOT NULL,
-    producer_name     VARCHAR2(50) NOT NULL,
-    producer_address  VARCHAR2(255) NOT NULL,
-    CONSTRAINT producer_pk PRIMARY KEY (producer_id)
+CREATE TABLE MANUFACTURERS (
+    manufacturer_id       NUMBER NOT NULL,
+    manufacturer_name     VARCHAR2(50) NOT NULL,
+    manufacturer_address  VARCHAR2(255) NOT NULL,
+    CONSTRAINT manufacturer_pk PRIMARY KEY (manufacturer_id)
 );
 
 CREATE TABLE CATEGORIES (
@@ -61,14 +61,14 @@ CREATE TABLE DRIVERS (
 
 CREATE TABLE PRODUCTS (
     product_id        NUMBER NOT NULL,
-    producer_id       NUMBER NOT NULL,
+    manufacturer_id       NUMBER NOT NULL,
     category_id       NUMBER NOT NULL,
     product_name      VARCHAR2(50) NOT NULL,
     product_price     NUMBER NOT NULL,
     product_stock     NUMBER NOT NULL,
     product_description VARCHAR2(255),
     CONSTRAINT product_pk PRIMARY KEY (product_id),
-    CONSTRAINT product_producer_fk FOREIGN KEY (producer_id) REFERENCES PRODUCERS(producer_id),
+    CONSTRAINT product_manufacturer_fk FOREIGN KEY (manufacturer_id) REFERENCES manufacturerS(manufacturer_id),
     CONSTRAINT product_category_fk FOREIGN KEY (category_id) REFERENCES CATEGORIES(category_id)
 );
 
