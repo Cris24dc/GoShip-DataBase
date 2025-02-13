@@ -1,4 +1,3 @@
--- Creare user
 ALTER SESSION SET CONTAINER = XEPDB1;
 
 DROP USER goship CASCADE;
