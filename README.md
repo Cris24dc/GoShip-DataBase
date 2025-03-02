@@ -18,15 +18,6 @@ The database is implemented using **Oracle SQL** and **PL/SQL** and captures det
 - **Route Tracking:** Defines delivery routes linking warehouses and customer locations, with assigned drivers.
 - **Invoice Generation:** Supports invoice creation for all placed orders.
 
-### Diagrams
-
-- **Entity-Relationship Diagram:**
-  <img src="./images/erd.png" width=95%>
-- **Conceptual Model:**
-  <img src="./images/conceptual.png" width=95%>
-- **Normalization Process:**
-  <img src="./images/normalization.png" width=95%>
-
 ## Repository Structure
 
 <img src="./images/file_structure.png" width=20%>
@@ -42,3 +33,12 @@ The database is implemented using **Oracle SQL** and **PL/SQL** and captures det
    - Run `insert_data.sql` from the `data/` folder to populate the database with sample records.
 4. **Add Procedures and Functions:**
    - Run scripts in `utils/` to add procedures, functions, triggers and packages.
+
+### Diagrams
+
+- **Entity-Relationship Diagram:**
+  <img src="./images/erd.png" width=95%>
+- **Conceptual Model:**
+  <img src="./images/conceptual.png" width=95%>
+- **Normalization Process:**
+  <img src="./images/normalization.png" width=95%>
